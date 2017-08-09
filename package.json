@@ -1,50 +1,4 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "react-native-router-flux@3.37.0",
-        "scope": null,
-        "escapedName": "react-native-router-flux",
-        "name": "react-native-router-flux",
-        "rawSpec": "3.37.0",
-        "spec": "3.37.0",
-        "type": "version"
-      },
-      "/Users/erichua/HJProj/webank_hj_app_rn/rn"
-    ]
-  ],
-  "_from": "react-native-router-flux@3.37.0",
-  "_id": "react-native-router-flux@3.37.0",
-  "_inCache": true,
-  "_location": "/react-native-router-flux",
-  "_nodeVersion": "5.5.0",
-  "_npmOperationalInternal": {
-    "host": "packages-18-east.internal.npmjs.com",
-    "tmp": "tmp/react-native-router-flux-3.37.0.tgz_1478760383883_0.5820447450969368"
-  },
-  "_npmUser": {
-    "name": "aksonov",
-    "email": "pavlo.aksonov@gmail.com"
-  },
-  "_npmVersion": "3.5.3",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "react-native-router-flux@3.37.0",
-    "scope": null,
-    "escapedName": "react-native-router-flux",
-    "name": "react-native-router-flux",
-    "rawSpec": "3.37.0",
-    "spec": "3.37.0",
-    "type": "version"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/react-native-router-flux/-/react-native-router-flux-3.37.0.tgz",
-  "_shasum": "18e8fd3e1e6dbdc4d8340cd47313c28bb9bb1caf",
-  "_shrinkwrap": null,
-  "_spec": "react-native-router-flux@3.37.0",
-  "_where": "/Users/erichua/HJProj/webank_hj_app_rn/rn",
   "author": {
     "name": "Pavlo Aksonov",
     "email": "akso.nov@gmail.com",
@@ -108,7 +62,7 @@
       "email": "pavlo.aksonov@gmail.com"
     }
   ],
-  "name": "react-native-router-flux",
+  "name": "@unpourtous/react-native-router-flux",
   "optionalDependencies": {},
   "readme": "ERROR: No README data found!",
   "repository": {
