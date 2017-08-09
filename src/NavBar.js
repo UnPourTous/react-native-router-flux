@@ -552,6 +552,7 @@ class NavBar extends React.Component {
               extrapolate: 'clamp'
             }),
           }]
+        }
       }
     }
     return (
