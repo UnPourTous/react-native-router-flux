@@ -239,7 +239,8 @@ export default class DefaultRenderer extends Component {
     let selected = state.children[state.index];
     while (selected.hasOwnProperty('children')) {
       selected = selected.children[selected.index];
-    } if (child !== selected) {
+    } 
+    if (child !== selected) {
       // console.log(`SKIPPING renderHeader because ${child.key} !== ${selected.key}`);
       return null;
     }

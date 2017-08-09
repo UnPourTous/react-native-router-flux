@@ -213,7 +213,7 @@ class NavBar extends React.Component {
     ];
 
     if (state.index === 0 && (!state.parentIndex || state.parentIndex === 0)) {
-      // return null;
+      return null;
     }
 
     if (BackButton) {
@@ -529,9 +529,6 @@ class NavBar extends React.Component {
       if (!fromScene || !toScene) {
         return
       }
-      // toScene.hideNavBar = !!toScene.hideNavBar
-      // fromeScene.hideNavBar = !!toScene.hideNavBar
-
       const isPop = !!state.from
       const currentIndex = isPop ? state.index + 1 : state.index - 1
       if (fromScene.hideNavBar === true && toScene.hideNavBar === false) {
@@ -543,11 +540,7 @@ class NavBar extends React.Component {
               outputRange: isPop ? [-1 * this.props.layout.initWidth, 0] : [this.props.layout.initWidth, 0],
               extrapolate: 'clamp'
             }),
-          }],
-          // opacity: this.props.position.interpolate({
-          //   inputRange: isPop ? [this.props.position._value - 1, this.props.position._value - 1 + 0.01, this.props.position._value] : [this.props.position._value, this.props.position._value + 1 - 0.01, this.props.position._value + 1],
-          //   outputRange: isPop ? [1, 0, 0] : [1, 1, 1],
-          // // })
+          }]
         }
       } else if (fromScene.hideNavBar === false && toScene.hideNavBar === true) {
         // 消失
@@ -558,12 +551,7 @@ class NavBar extends React.Component {
               outputRange: isPop ? [this.props.layout.initWidth, 0] : [0, -1 * this.props.layout.initWidth],
               extrapolate: 'clamp'
             }),
-          }],
-          // opacity: this.props.position.interpolate({
-          //   inputRange: isPop ? [this.props.position._value - 1, this.props.position._value - 1 + 0.01, this.props.position._value] : [this.props.position._value, this.props.position._value + 1 - 0.01, this.props.position._value + 1],
-          //   outputRange: isPop ? [0, 1, 1] : [0, 0, 0],
-          // })
-        }
+          }]
       }
     }
     return (
@@ -574,29 +562,7 @@ class NavBar extends React.Component {
           this.props.navigationBarStyle,
           state.navigationBarStyle,
           selected.navigationBarStyle,
-          // selected.getNavigationBarStyle(),
-          // 如果当前为hide, 并且后面的页面没有hide，才做这个推出的动画
-          // n -> n - 1, -width -> 0
-          // n -> n + 1, width -> 0
-          // 有from是返回
           getAnim.bind(this)(),
-          // {
-          //   opacity: this.props.position.interpolate({
-          //     inputRange: state.from ? [this.props.position._value - 1, this.props.position._value] : [this.props.position._value, this.props.position._value + 1],
-          //     outputRange: selected.hideNavBar ? [1, 0] : [0, 1],
-          //     extrapolate: 'clamp'
-          //   })
-          // }
-          // toScene.hideNavBar ? {
-          //   opacity: this.props.position.interpolate({
-          //     inputRange: state.from ? [this.props.position._value - 1, this.props.position._value - 0.01, this.props.position._value] : [this.props.position._value, this.props.position._value + 1 - 0.01, this.props.position._value + 1],
-          //     outputRange: selected.hideNavBar ? [1, 1, 0] : [0, 0, 1],
-          //     extrapolate: 'clamp'
-          //   })
-          // } : null
-          // toScene.hideNavBar ? {
-          //   backgroundColor: '#FFFFFF00'
-          // } : null
         ]}
       >
         {navigationBarBackgroundImage ? (
