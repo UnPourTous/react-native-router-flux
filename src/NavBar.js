@@ -518,7 +518,6 @@ class NavBar extends React.Component {
         {renderRightButton(navProps)}
       </View>
     );
-    this.props.position.addListener((e) => {console.log(e)})
     let opacity = 1
     if (selected.hideNavBar === true) {
       opacity = 0
