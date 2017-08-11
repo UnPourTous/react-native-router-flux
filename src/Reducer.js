@@ -82,6 +82,25 @@ function inject(state, action, props, scenes) {
     case ActionConst.POP_TO: {
       const targetIndex = action.targetIndex;
 
+      const popNum = state.children.length - targetIndex - 1
+      if (popNum > 1) {
+        const newAction = {
+          ...action,
+          duration: 0,  // do not animate
+          animationStyle: null
+        };
+        delete newAction.popNum;
+
+        var i = 1
+        while (i < popNum) {
+          state.children[state.children.length - 1 - i] = {
+            ...state.children[state.children.length - 1 - i],
+            ...newAction
+          }
+          i++
+        }
+      }
+
       return {
         ...state,
         index: targetIndex,
@@ -113,6 +132,24 @@ function inject(state, action, props, scenes) {
         assert(popNum <= state.index,
           'The data is the number of scenes you want to pop, ' +
           "it must be smaller than scenes stack's length.");
+
+        if (popNum > 1) {
+          const newAction = {
+            ...action,
+            duration: 0,  // do not animate
+            animationStyle: null
+          };
+          delete newAction.popNum;
+
+          var i = 1
+          while (i < popNum) {
+            state.children[state.children.length - 1 - i] = {
+              ...state.children[state.children.length - 1 - i],
+              ...newAction
+            }
+            i++
+          }
+        }
       }
 
       return {
@@ -277,7 +314,7 @@ function update(state, action) {
   // find parent in the state
   const props = { ...state.scenes[action.key], ...action };
   assert(props.parent, `No parent is defined for route=${action.key}`);
-  
+
   console.log('Old State: ', state)
   const newState = inject(state, action, props, state.scenes);
   console.log('New State: ', newState)
