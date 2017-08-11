@@ -536,7 +536,7 @@ class NavBar extends React.Component {
           transform: [{
             translateX: this.props.position.interpolate({
               inputRange: isPop ? [currentIndex - 1, currentIndex] : [currentIndex, currentIndex + 1],
-              outputRange: isPop ? [-1 * this.props.layout.initWidth, 0] : [this.props.layout.initWidth, 0],
+              outputRange: isPop ? [0, -1 * this.props.layout.initWidth] : [this.props.layout.initWidth, 0],
               extrapolate: 'clamp'
             }),
           }]
