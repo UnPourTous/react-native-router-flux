@@ -221,7 +221,7 @@ class NavBar extends React.Component {
         <Animated.View
           style={{
             opacity: this.props.position.interpolate({
-              inputRange: [this.props.position._value - 1, this.props.position._value - 1, this.props.position._value + 1],
+              inputRange: [state.index - 1, state.index, state.index + 1],
               outputRange: [0, 1, 0],
             })
           }}>
@@ -427,12 +427,22 @@ class NavBar extends React.Component {
   }
 
   renderTitle(childState, index:number) {
+    let state = this.props.navigationState;
+    let selected = state.children[state.index];
+    // 如果state.from 有值，则是pop, 否则是push, 直接从list里面去
+    let fromScene = state.from || (state.children[state.index - 1])
+    let toScene = selected
+
     let title = this.props.getTitle ? this.props.getTitle(childState) : childState.title;
     if (title === undefined && childState.component && childState.component.title) {
       title = childState.component.title;
     }
     if (typeof(title) === 'function') {
       title = title(childState);
+    }
+
+    if (toScene.hideNavBar) {
+      return null
     }
     return (
       <Animated.View
@@ -456,6 +466,9 @@ class NavBar extends React.Component {
                 inputRange: [index - 1, index - 0.5, index, index + 0.5, index + 1],
                 outputRange: [0, 0, this.props.titleOpacity, 0, 0],
               }),
+              backgroundColor: '#FFFFFF00'
+            },
+            {
               left: this.props.position.interpolate({
                 inputRange: [index - 1, index + 1],
                 outputRange: [150, -150],
@@ -464,8 +477,7 @@ class NavBar extends React.Component {
                 inputRange: [index - 1, index + 1],
                 outputRange: [-150, 150],
               }),
-              backgroundColor: '#FFFFFF00'
-            },
+            }
           ]}
         >
           {title}
@@ -518,11 +530,6 @@ class NavBar extends React.Component {
         {renderRightButton(navProps)}
       </View>
     );
-    let opacity = 1
-    if (selected.hideNavBar === true) {
-      opacity = 0
-    }
-    const pointerEvents = opacity === 0 ? 'none' : 'auto'
 
     const getAnim = () => {
       if (!fromScene || !toScene) {
@@ -536,7 +543,8 @@ class NavBar extends React.Component {
           transform: [{
             translateX: this.props.position.interpolate({
               inputRange: isPop ? [currentIndex - 1, currentIndex] : [currentIndex, currentIndex + 1],
-              outputRange: isPop ? [0, -1 * this.props.layout.initWidth] : [this.props.layout.initWidth, 0],
+              // 这里的pop情况的值需要根据页面的便宜来做相应调整
+              outputRange: isPop ? [0, -60] : [this.props.layout.initWidth, 0],
               extrapolate: 'clamp'
             }),
           }]
@@ -556,7 +564,6 @@ class NavBar extends React.Component {
     }
     return (
       <Animated.View
-        pointerEvents={pointerEvents}
         style={[
           styles.header,
           this.props.navigationBarStyle,
