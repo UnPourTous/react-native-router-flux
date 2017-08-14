@@ -315,10 +315,7 @@ function update(state, action) {
   const props = { ...state.scenes[action.key], ...action };
   assert(props.parent, `No parent is defined for route=${action.key}`);
 
-  console.log('Old State: ', state)
-  const newState = inject(state, action, props, state.scenes);
-  console.log('New State: ', newState)
-  return newState
+  return inject(state, action, props, state.scenes);
 }
 
 function reducer({ initialState, scenes }) {
