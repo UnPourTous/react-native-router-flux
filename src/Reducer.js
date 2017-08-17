@@ -11,6 +11,7 @@
 
 import * as ActionConst from './ActionConst';
 import { ActionMap } from './Actions';
+import Actions from './Actions';
 import { assert } from './Util';
 import { getInitialState } from './State';
 import { Platform } from 'react-native';
@@ -314,8 +315,12 @@ function update(state, action) {
   // find parent in the state
   const props = { ...state.scenes[action.key], ...action };
   assert(props.parent, `No parent is defined for route=${action.key}`);
-
-  return inject(state, action, props, state.scenes);
+  const oldState = state
+  const newState = inject(state, action, props, state.scenes);
+  Actions.sceneChangeListener && Actions.sceneChangeListener(
+    oldState.children.length > 0 ? oldState.children[oldState.children.length - 1] : null,
+    newState.children.length > 0 ? newState.children[newState.children.length - 1] : null)
+  return newState
 }
 
 function reducer({ initialState, scenes }) {
