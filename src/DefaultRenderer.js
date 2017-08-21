@@ -221,6 +221,7 @@ export default class DefaultRenderer extends Component {
   renderScene(/* NavigationSceneRendererProps */ props) {
     return (
       <DefaultRenderer
+        navigationSceneRendererProps={props}
         key={props.scene.navigationState.key}
         onNavigate={props.onNavigate}
         navigationState={props.scene.navigationState}
@@ -239,7 +240,7 @@ export default class DefaultRenderer extends Component {
     let selected = state.children[state.index];
     while (selected.hasOwnProperty('children')) {
       selected = selected.children[selected.index];
-    } 
+    }
     if (child !== selected) {
       // console.log(`SKIPPING renderHeader because ${child.key} !== ${selected.key}`);
       return null;
@@ -312,10 +313,43 @@ export default class DefaultRenderer extends Component {
     }
 
     if (SceneComponent) {
+      const {
+        position,
+        scene,
+      } = this.props.navigationSceneRendererProps;
+
+      const index = scene.index;
+      const inputRange = [index - 1, index - 0.5, index, index + 0.5, index + 1];
+
+      const opacity = position.interpolate({
+        inputRange,
+        outputRange: [0, 0.2, 1, 0.2, 0],
+      });
+
+      const shadowWidth = navigationState.sceneShawdow && navigationState.sceneShawdow.width ? navigationState.sceneShawdow.width : 0
+      const shadowImageURI = navigationState.sceneShawdow && navigationState.sceneShawdow.imageURI
+        ? navigationState.sceneShawdow.imageURI
+        : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAABCAYAAAASC7TOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpiZIAAXiAWAmIxJCwEEGAABOEAdZCugfAAAAAASUVORK5CYII='
       return (
         <View
-          style={[styles.sceneStyle, navigationState.sceneStyle]}
-        >
+          style={[styles.sceneStyle, {
+            width: Dimensions.get('window').width + shadowWidth,
+            backgroundColor: 'green',
+            justifyContent: 'flex-end'
+          }, navigationState.sceneStyle]}>
+
+          <Animated.Image
+            resizeMode={'stretch'}
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: shadowWidth,
+              left: -1 * shadowWidth,
+              alignSelf: 'stretch',
+              opacity
+            }} source={{uri: imageURI}} />
           <SceneComponent {...this.props} {...navigationState} />
         </View>
       );
