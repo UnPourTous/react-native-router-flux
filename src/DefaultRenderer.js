@@ -349,7 +349,7 @@ export default class DefaultRenderer extends Component {
               left: -1 * shadowWidth,
               alignSelf: 'stretch',
               opacity
-            }} source={{uri: imageURI}} />
+            }} source={{uri: shadowImageURI}} />
           <SceneComponent {...this.props} {...navigationState} />
         </View>
       );
