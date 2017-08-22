@@ -321,20 +321,27 @@ export default class DefaultRenderer extends Component {
       const index = scene.index;
       const inputRange = [index - 1, index - 0.5, index, index + 0.5, index + 1];
 
-      const opacity = position.interpolate({
-        inputRange,
-        outputRange: [0, 0.2, 1, 0.2, 0],
-      });
-
       const shadowWidth = navigationState.sceneShawdow && navigationState.sceneShawdow.width ? navigationState.sceneShawdow.width : 0
       const shadowImageURI = navigationState.sceneShawdow && navigationState.sceneShawdow.imageURI
         ? navigationState.sceneShawdow.imageURI
         : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAABCAYAAAASC7TOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpiZIAAXiAWAmIxJCwEEGAABOEAdZCugfAAAAAASUVORK5CYII='
+      const shadowGetAnimation = navigationState.sceneShawdow && navigationState.sceneShawdow.getAnimation
+        ? navigationState.sceneShawdow.getAnimation
+        : () => position.interpolate({
+          inputRange,
+          outputRange: [0, 0.2, 1, 0.2, 0],
+        })
+
+      const opacity = shadowGetAnimation(index, position)
+
       return (
         <View
           style={[styles.sceneStyle, {
             width: Dimensions.get('window').width + shadowWidth,
-            justifyContent: 'flex-end'
+            justifyContent: 'flex-start',
+            flexDirection: 'row',
+            paddingLeft: shadowWidth,
+            left: -shadowWidth,
           }, navigationState.sceneStyle]}>
 
           <Animated.Image
@@ -345,7 +352,6 @@ export default class DefaultRenderer extends Component {
               top: 0,
               bottom: 0,
               width: shadowWidth,
-              left: -1 * shadowWidth,
               alignSelf: 'stretch',
               opacity
             }} source={{uri: shadowImageURI}} />
