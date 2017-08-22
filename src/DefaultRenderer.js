@@ -334,7 +334,6 @@ export default class DefaultRenderer extends Component {
         <View
           style={[styles.sceneStyle, {
             width: Dimensions.get('window').width + shadowWidth,
-            backgroundColor: 'green',
             justifyContent: 'flex-end'
           }, navigationState.sceneStyle]}>
 
