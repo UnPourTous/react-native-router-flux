@@ -75,5 +75,5 @@
     "test:watch": "npm run test -- --watch"
   },
   "typings": "index.d.ts",
-  "version": "3.37.16"
+  "version": "3.37.17"
 }
