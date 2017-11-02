@@ -540,7 +540,7 @@ class NavBar extends React.Component {
             translateX: this.props.position.interpolate({
               inputRange: isPop ? [currentIndex - 1, currentIndex] : [currentIndex, currentIndex + 1],
               // 这里的pop情况的值需要根据页面的便宜来做相应调整
-              outputRange: isPop ? [0, -60] : [this.props.layout.initWidth, 0],
+              outputRange: isPop ? [0, -60] : [this.props.layout.initWidth + (this.props.scenePopExtraOffset || 0), 0],
               extrapolate: 'clamp'
             }),
           }]
