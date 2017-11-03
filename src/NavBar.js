@@ -462,6 +462,10 @@ class NavBar extends React.Component {
             this.props.navigationState.titleStyle,
             childState.titleStyle,
             {
+              opacity: this.props.position.interpolate({
+                inputRange: [index - 1, index - 0.5, index, index + 0.5, index + 1],
+                outputRange: [0, 0, this.props.titleOpacity, 0, 0],
+              }),
               backgroundColor: '#FFFFFF00'
             },
             {
