@@ -295,7 +295,22 @@ export default class DefaultRenderer extends Component {
     delete navBarProps.style;
 
     const getTitle = selected.getTitle || (opts => opts.title);
-    return <HeaderComponent {...props} {...navBarProps} getTitle={getTitle} />;
+
+    return (
+      // 增加这一层是为了解决都有导航栏，页面切换的时候，NavBar会有一瞬间没有，导致后面的页面侧漏走光的问题
+      <View pointerEvents={'box-none'} style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: props.navigationState.customNavBarHeight,
+        backgroundColor: (toScene && fromScene && !toScene.hideNavBar && !fromScene.hideNavBar)
+          ? props.navigationState.customDefaultNavBarBackgroundColor
+          : '#00000000'
+      }}>
+        <HeaderComponent {...props} {...navBarProps} getTitle={getTitle} />
+      </View>
+    )
   }
 
   render() {

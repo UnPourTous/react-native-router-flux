@@ -34,6 +34,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions
 } from 'react-native';
 import Actions from './Actions';
 import _drawerImage from './menu_burger.png';
@@ -531,6 +532,7 @@ class NavBar extends React.Component {
       </View>
     );
 
+    const scenePopExtraOffset = this.props.scenePopExtraOffset || 0
     const getAnim = () => {
       if (!fromScene || !toScene) {
         return
@@ -544,7 +546,8 @@ class NavBar extends React.Component {
             translateX: this.props.position.interpolate({
               inputRange: isPop ? [currentIndex - 1, currentIndex] : [currentIndex, currentIndex + 1],
               // 这里的pop情况的值需要根据页面的便宜来做相应调整
-              outputRange: isPop ? [0, -60] : [this.props.layout.initWidth + (this.props.scenePopExtraOffset || 0), 0],
+              outputRange: isPop ? [0, -this.props.layout.initWidth - scenePopExtraOffset]
+                : [this.props.layout.initWidth + scenePopExtraOffset, 0],
               extrapolate: 'clamp'
             }),
           }]
@@ -555,7 +558,7 @@ class NavBar extends React.Component {
           transform: [{
             translateX: this.props.position.interpolate({
               inputRange: isPop ? [currentIndex - 1, currentIndex] : [currentIndex, currentIndex + 1],
-              outputRange: isPop ? [this.props.layout.initWidth, 0] : [0, -1 * this.props.layout.initWidth],
+              outputRange: isPop ? [this.props.layout.initWidth + scenePopExtraOffset, 0] : [0, -1 * this.props.layout.initWidth - scenePopExtraOffset],
               extrapolate: 'clamp'
             }),
           }]
@@ -570,6 +573,10 @@ class NavBar extends React.Component {
           state.navigationBarStyle,
           selected.navigationBarStyle,
           getAnim.bind(this)(),
+          {
+            width: Dimensions.get('window').width + scenePopExtraOffset,
+            paddingRight: scenePopExtraOffset
+          }
         ]}
       >
         {navigationBarBackgroundImage ? (
